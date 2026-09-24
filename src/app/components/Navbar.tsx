@@ -2,15 +2,34 @@
 
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [planCount, setPlanCount] = useState(0);
+  const [savedCount, setSavedCount] = useState(0);
+
+  useEffect(() => {
+    const updateCounts = () => {
+      const plan = JSON.parse(localStorage.getItem("fitlog-plan") || "[]");
+      const saved = JSON.parse(localStorage.getItem("fitlog-saved") || "[]");
+
+      setPlanCount(plan.length);
+      setSavedCount(saved.length);
+    };
+
+    updateCounts();
+
+    window.addEventListener("fitlog-updated", updateCounts);
+
+    return () => {
+      window.removeEventListener("fitlog-updated", updateCounts);
+    };
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#1c1f26] bg-[#0c0d10]/95 backdrop-blur">
       <nav className="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-6 lg:h-[81px]">
-        {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <img
             src="/logo.png"
@@ -22,7 +41,6 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop navigation */}
         <div className="hidden items-center gap-5 text-[11px] md:flex">
           <Link
             href="/"
@@ -39,7 +57,6 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Desktop counters */}
         <div className="hidden items-center gap-5 text-[11px] md:flex">
           <Link
             href="/my-plan"
@@ -47,7 +64,7 @@ export default function Navbar() {
           >
             Plan
             <span className="ml-1.5 inline-grid h-4 w-4 place-items-center rounded-full bg-[#ccff00] text-[9px] font-bold text-black">
-              0
+              {planCount}
             </span>
           </Link>
 
@@ -57,12 +74,11 @@ export default function Navbar() {
           >
             Saved
             <span className="ml-1.5 inline-grid h-4 w-4 place-items-center rounded-full border border-white/40 text-[9px] font-bold text-white">
-              0
+              {savedCount}
             </span>
           </Link>
         </div>
 
-        {/* Mobile hamburger */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="text-white md:hidden"
@@ -72,7 +88,6 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile menu */}
       {menuOpen && (
         <div className="border-t border-[#1c1f26] bg-[#0c0d10] px-6 py-5 md:hidden">
           <div className="flex flex-col gap-4 text-sm">
@@ -97,7 +112,7 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               className="text-white/70"
             >
-              Plan: <span className="text-[#ccff00]">0</span>
+              Plan: <span className="text-[#ccff00]">{planCount}</span>
             </Link>
 
             <Link
@@ -105,7 +120,7 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               className="text-white/70"
             >
-              Saved: 0
+              Saved: {savedCount}
             </Link>
           </div>
         </div>
