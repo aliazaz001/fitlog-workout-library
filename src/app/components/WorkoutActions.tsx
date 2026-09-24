@@ -1,6 +1,7 @@
 "use client";
 
 import { Bookmark, ClipboardPlus } from "lucide-react";
+import toast from "react-hot-toast";
 
 type Workout = {
   id: number;
@@ -18,24 +19,33 @@ export default function WorkoutActions({ workout }: { workout: Workout }) {
     const plan = JSON.parse(localStorage.getItem("fitlog-plan") || "[]");
 
     if (plan.some((item: Workout) => item.id === workout.id)) {
-      alert("This workout is already in your plan.");
+      toast.error("This workout is already in your plan.");
+      return;
+    }
+
+    if (plan.length >= 5) {
+      toast.error("Your plan can contain a maximum of 5 workouts.");
       return;
     }
 
     localStorage.setItem("fitlog-plan", JSON.stringify([...plan, workout]));
-    alert("Workout added to your plan!");
+    window.dispatchEvent(new Event("fitlog-updated"));
+
+    toast.success("Workout added to your plan!");
   };
 
   const saveWorkout = () => {
     const saved = JSON.parse(localStorage.getItem("fitlog-saved") || "[]");
 
     if (saved.some((item: Workout) => item.id === workout.id)) {
-      alert("Workout is already saved.");
+      toast.error("Workout is already saved.");
       return;
     }
 
     localStorage.setItem("fitlog-saved", JSON.stringify([...saved, workout]));
-    alert("Workout saved!");
+    window.dispatchEvent(new Event("fitlog-updated"));
+
+    toast.success("Workout saved!");
   };
 
   return (
