@@ -8,70 +8,80 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#11120f]/95 backdrop-blur">
-     <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8 lg:px-12">
+    <header className="sticky top-0 z-50 border-b border-[#1c1f26] bg-[#0c0d10]/95 backdrop-blur">
+      <nav className="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-6 lg:h-[81px]">
         {/* Logo */}
-        <Link
-          href="/"
-          className="flex items-center gap-2 text-xl font-black tracking-tight text-white"
-        >
-          <span className="grid h-8 w-8 place-items-center rounded bg-[#ccff00] text-sm text-black">
-            F
+        <Link href="/" className="flex items-center gap-2">
+          <img
+            src="/logo.png"
+            alt="FitLog"
+            className="h-6 w-auto object-contain"
+          />
+          <span className="text-xs font-black tracking-wide text-white">
+            FITLOG
           </span>
-          FITLOG
         </Link>
 
-        {/* Desktop links */}
-        <div className="hidden items-center gap-7 text-sm font-bold md:flex">
-          <Link href="/" className="text-[#ccff00] transition hover:text-white">
-            WORKOUT
+        {/* Desktop navigation */}
+        <div className="hidden items-center gap-5 text-[11px] md:flex">
+          <Link
+            href="/"
+            className="rounded-full bg-[#ccff00] px-4 py-1.5 font-semibold text-black"
+          >
+            Workouts
           </Link>
 
           <Link
             href="/my-plan"
-            className="text-white/70 transition hover:text-[#ccff00]"
+            className="font-medium text-white/65 transition hover:text-white"
           >
-            MY PLAN
+            My Plan
           </Link>
         </div>
 
-        {/* Counters */}
-        <div className="hidden items-center gap-2 sm:flex">
+        {/* Desktop counters */}
+        <div className="hidden items-center gap-5 text-[11px] md:flex">
           <Link
             href="/my-plan"
-            className="rounded-full bg-[#ccff00] px-3 py-2 text-xs font-black text-black transition hover:bg-white"
+            className="font-medium text-white/65 transition hover:text-white"
           >
-            PLAN 0
+            Plan
+            <span className="ml-1.5 inline-grid h-4 w-4 place-items-center rounded-full bg-[#ccff00] text-[9px] font-bold text-black">
+              0
+            </span>
           </Link>
 
           <Link
             href="/my-plan"
-            className="rounded-full border border-white/40 px-3 py-2 text-xs font-black text-white transition hover:border-[#ccff00] hover:text-[#ccff00]"
+            className="font-medium text-white/65 transition hover:text-white"
           >
-            SAVED 0
+            Saved
+            <span className="ml-1.5 inline-grid h-4 w-4 place-items-center rounded-full border border-white/40 text-[9px] font-bold text-white">
+              0
+            </span>
           </Link>
         </div>
 
-        {/* Mobile menu button */}
+        {/* Mobile hamburger */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="text-white md:hidden"
           aria-label="Toggle menu"
         >
-          {menuOpen ? <X size={25} /> : <Menu size={25} />}
+          {menuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </nav>
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="border-t border-white/10 bg-[#11120f] px-5 py-5 md:hidden">
-          <div className="flex flex-col gap-4 text-sm font-bold">
+        <div className="border-t border-[#1c1f26] bg-[#0c0d10] px-6 py-5 md:hidden">
+          <div className="flex flex-col gap-4 text-sm">
             <Link
               href="/"
               onClick={() => setMenuOpen(false)}
-              className="text-[#ccff00]"
+              className="font-semibold text-[#ccff00]"
             >
-              WORKOUT
+              Workouts
             </Link>
 
             <Link
@@ -79,26 +89,24 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               className="text-white/70"
             >
-              MY PLAN
+              My Plan
             </Link>
 
-            <div className="flex gap-2 pt-2">
-              <Link
-                href="/my-plan"
-                onClick={() => setMenuOpen(false)}
-                className="rounded-full bg-[#ccff00] px-3 py-2 text-xs font-black text-black"
-              >
-                PLAN 0
-              </Link>
+            <Link
+              href="/my-plan"
+              onClick={() => setMenuOpen(false)}
+              className="text-white/70"
+            >
+              Plan: <span className="text-[#ccff00]">0</span>
+            </Link>
 
-              <Link
-                href="/my-plan"
-                onClick={() => setMenuOpen(false)}
-                className="rounded-full border border-white/40 px-3 py-2 text-xs font-black text-white"
-              >
-                SAVED 0
-              </Link>
-            </div>
+            <Link
+              href="/my-plan"
+              onClick={() => setMenuOpen(false)}
+              className="text-white/70"
+            >
+              Saved: 0
+            </Link>
           </div>
         </div>
       )}
