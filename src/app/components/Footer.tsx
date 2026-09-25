@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="mx-auto flex max-w-[1232px] flex-col gap-4 text-xs sm:flex-row sm:items-center sm:justify-between">
         <Link href="/" className="flex items-center gap-2">
           <img
-            src="/Footer-logo.png"
+            src="/footer-logo.png"
             alt="FitLog"
             className="h-5 w-auto object-contain"
           />
