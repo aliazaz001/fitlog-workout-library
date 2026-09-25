@@ -28,7 +28,7 @@ export default async function WorkoutDetailsPage({
 
   const response = await fetch(
     `https://api.abcz.workers.dev/api/fitlog/${id}`,
-    { cache: "no-store" }
+    { next: { revalidate: 60 } }
   );
 
   if (!response.ok) {
@@ -61,7 +61,6 @@ export default async function WorkoutDetailsPage({
       <main className="min-h-screen bg-[#0c0d10] px-6 py-10">
         <section className="mx-auto max-w-[1232px]">
           <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:gap-12">
-            {/* Left image */}
             <div>
               <img
                 src={workout.image}
@@ -70,7 +69,6 @@ export default async function WorkoutDetailsPage({
               />
             </div>
 
-            {/* Right information */}
             <div className="flex flex-col justify-center">
               <h1 className="font-[Oswald] text-[32px] font-bold leading-tight text-white">
                 {workout.name.toUpperCase()}
