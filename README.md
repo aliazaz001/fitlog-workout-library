@@ -1,4 +1,3 @@
-# 💪 FitLog — Workout Library
 
 FitLog is a responsive workout planner web application. Users can browse workout exercises, view full details, create a daily workout plan, save workouts for later, and track their exercise time and calories.
 
